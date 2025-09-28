@@ -14,7 +14,15 @@ Output: False
 
 def has_duplicates(product_ids):
     # Your implementation here
-    pass
+   seen = set()
+   for pid in product_ids:
+     if pid in seen:
+      return True
+     seen.add(pid)
+     return False
+   
+#I used a set because it provides O(1) average-time lookup and insertion. 
+#The overall runtime is O(n) with O(n) space, which is efficient for detecting duplicates.
 
 
 """
@@ -29,17 +37,24 @@ task_queue.add_task("Email follow-up")
 task_queue.add_task("Code review")
 task_queue.remove_oldest_task() → "Email follow-up"
 """
+from collections import deque
 
 class TaskQueue:
     def __init__(self):
         # Your initialization here
-        pass
+        self.queue = deque()
 
     def add_task(self, task):
-        pass
+         self.queue.append(task)
 
     def remove_oldest_task(self):
-        pass
+        if self.queue:
+            return self.queue.popleft()
+        return None 
+    
+#I used a deque because it allows O(1) insertion at the end and O(1) removal from the front. 
+#A regular list would make removing the first element O(n) due to shifting. 
+#This data structure is ideal for queue-like behavior where order must be preserved.
 
 
 """
@@ -57,10 +72,15 @@ tracker.get_unique_count() → 2
 
 class UniqueTracker:
     def __init__(self):
-        pass
+        self.seen = set()
 
     def add(self, value):
-        pass
+        self.seen.add(value)
 
     def get_unique_count(self):
-        pass
+        return len(self.seen)
+    
+#I used a set to automatically store only unique values, since sets discard duplicates by design. 
+#Adding values and checking size are O(1) on average, so I can efficiently track uniqueness over a stream of data. 
+#This ensures both correctness and efficiency in counting distinct elements.
+
